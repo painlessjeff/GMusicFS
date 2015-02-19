@@ -22,6 +22,9 @@ from gmusicapi import Webclient as GoogleMusicWebAPI
 
 import fifo
 
+reload(sys) # Reload does the trick
+sys.setdefaultencoding('UTF-8')
+
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('gmusicfs')
 deviceId=None
