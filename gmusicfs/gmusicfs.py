@@ -173,7 +173,7 @@ class MusicLibrary(object):
 
         self.api = GoogleMusicAPI(debug_logging=self.verbose)
         log.info('Logging in...')
-        self.api.login(username, password)
+        self.api.login(username, password, deviceId)
         log.info('Login successful.')
 
     def __aggregate_albums(self):
