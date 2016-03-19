@@ -143,7 +143,7 @@ class Album(object):
         if get_size and self.library.true_file_size:
             for t in self.__tracks:
                 if not 'bytes' in t:
-                    r = urllib2.Request(self.get_track_stream(t)[0])
+                    r = urllib2.Request(self.get_track_stream(t))
                     r.get_method = lambda: 'HEAD'
                     u = urllib2.urlopen(r)
                     t['bytes'] = int(u.headers['Content-Length']) + ID3V1_TRAILER_SIZE
