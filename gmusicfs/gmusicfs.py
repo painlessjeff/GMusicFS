@@ -373,7 +373,7 @@ class GMusicFS(LoggingMixIn, Operations):
         # TODO This could be moved into a Track class in the future
         st['st_mode'] = (S_IFREG | 0444)
         st['st_size'] = int(track['estimatedSize'])
-        if 'bytes' in t:
+        if 'bytes' in track:
             st['st_size'] = int(track['bytes'])
         st['st_ctime'] = st['st_mtime'] = st['st_atime'] = 0
         if 'creationTimestamp' in track:
