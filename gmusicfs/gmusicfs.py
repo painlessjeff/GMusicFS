@@ -83,7 +83,7 @@ class Playlist(object):
         """Return the track that corresponds to a filename from this playlist"""
         m = self.__filename_re.match(filename)
         if m:
-            tracknum = m.groups()[0]
+            tracknum = int(m.groups()[0])
             return self.__tracks[tracknum - 1]
         return None
 
