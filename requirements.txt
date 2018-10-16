@@ -1,3 +1,0 @@
-fusepy
-gmusicapi
-eyed3

@@ -41,16 +41,29 @@ affect you.
 Installation
 ------------
 
-Installing GMusicFS requires two dependencies:
+Installing GMusicFS requires two dependencies which currently cannot
+be resolved automatically:
 
  * [fusepy](https://github.com/terencehonles/fusepy)
  * [gmusicapi](https://github.com/simon-weber/Unofficial-Google-Music-API)
 
-These will be installed automatically when installing GMusicFS:
+Neither of these are able to be installed via setuptools at the
+current time. fusepy due to
+[this bug](https://github.com/terencehonles/fusepy/pull/9) and
+we currently require the development version of gmusicapi which is not
+on PyPI yet. No worries, we can install the dependencies manually:
 
 ```
-pip install https://github.com/hadleyrich/GMusicFS/tarball/master
+pip install https://github.com/terencehonles/fusepy/tarball/master
+pip install https://github.com/simon-weber/Unofficial-Google-Music-API/tarball/develop
 ```
+
+Then install GMusicFS:
+
+```
+pip install https://github.com/EnigmaCurry/GMusicFS/tarball/master
+```
+
 
 Usage
 -----

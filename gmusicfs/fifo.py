@@ -1,7 +1,5 @@
-"""
-'Efficient FIFO Buffer' from http://ben.timby.com/?p=139
-Modified to be a blocking buffer, for use in gmusicfs
-"""
+# 'Efficient FIFO Buffer' from http://ben.timby.com/?p=139
+# Modified to be a blocking buffer, for use in gmusicfs
 
 import threading
 try:
@@ -10,7 +8,6 @@ except ImportError:
     from StringIO import StringIO
 
 MAX_BUFFER = 1024**2*4
-
 
 class Buffer(object):
     """
@@ -50,13 +47,13 @@ class Buffer(object):
             if not self.buffers:
                 self.buffers.append(StringIO())
                 self.write_pos = 0
-            buf = self.buffers[-1]
-            buf.seek(self.write_pos)
-            buf.write(data)
-            if buf.tell() >= self.max_size:
-                buf = StringIO()
-                self.buffers.append(buf)
-            self.write_pos = buf.tell()
+            buffer = self.buffers[-1]
+            buffer.seek(self.write_pos)
+            buffer.write(data)
+            if buffer.tell() >= self.max_size:
+                buffer = StringIO()
+                self.buffers.append(buffer)
+            self.write_pos = buffer.tell()
         finally:
             self.lock.release()
         self.done_first_write = True
@@ -72,18 +69,17 @@ class Buffer(object):
                     break
                 elif len(self.buffers) == 0:
                     continue
-                buf = self.buffers[0]
-                buf.seek(self.read_pos)
-                read_buf.write(buf.read(remaining))
-                self.read_pos = buf.tell()
+                buffer = self.buffers[0]
+                buffer.seek(self.read_pos)
+                read_buf.write(buffer.read(remaining))
+                self.read_pos = buffer.tell()
                 if length == -1:
-                    # we did not limit the read, we exhausted the buffer,
-                    # so delete it, keep reading from remaining buffers.
+                    # we did not limit the read, we exhausted the buffer, so delete it.
+                    # keep reading from remaining buffers.
                     del self.buffers[0]
                     self.read_pos = 0
                 else:
-                    # we limited the read so either we
-                    # exhausted the buffer or not:
+                    #we limited the read so either we exhausted the buffer or not:
                     remaining = length - read_buf.tell()
                     if remaining > 0:
                         # exhausted, remove buffer, read more.
@@ -97,16 +93,16 @@ class Buffer(object):
         return read_buf.getvalue()
 
     def __len__(self):
-        length = 0
+        len = 0
         self.lock.acquire()
         try:
-            for buf in self.buffers:
-                buf.seek(0, 2)
-                if buf == self.buffers[0]:
-                    length += buf.tell() - self.read_pos
+            for buffer in self.buffers:
+                buffer.seek(0, 2)
+                if buffer == self.buffers[0]:
+                    len += buffer.tell() - self.read_pos
                 else:
-                    length += buf.tell()
-            return length
+                    len += buffer.tell()
+            return len
         finally:
             self.lock.release()
 
