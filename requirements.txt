@@ -1,0 +1,3 @@
+fusepy
+gmusicapi
+eyed3
